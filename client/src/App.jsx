@@ -10,22 +10,23 @@ import MentorDetails from "./pages/MentorDetails";
 import MentorDashboard from "./pages/MentorDashboard";
 import CandidateBookings from "./pages/CandidateBookings";
 import Stats from "./pages/Stats";
+import Profile from "./pages/Profile";
 
-// Redux is used to check the logged-in user
+// Redux is used to read the logged-in user and handle logout
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "./features/auth/authSlice";
 
-// Main CSS file
-import "./App.css";
+// Main application styles
+import "./App.scss";
 
 function App() {
-  // Get dispatch so we can log the user out
+  // Redux dispatch function
   const dispatch = useDispatch();
 
-  // Get logged-in user details from Redux
+  // Get the logged-in user from Redux
   const { user } = useSelector((state) => state.auth);
 
-  // Logout button action
+  // Logout action
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -36,7 +37,7 @@ function App() {
       {/* Main navigation bar */}
       <nav className="navbar">
 
-        {/* Website name - clicking this takes user to home page */}
+        {/* Website name */}
         <Link to="/" className="brand">
           MentorConnect
         </Link>
@@ -44,34 +45,39 @@ function App() {
         {/* Navigation links */}
         <div className="nav-links">
 
-          {/* Everyone can view mentors */}
+          {/* Everyone can browse mentors */}
           <Link to="/mentors">
             Find Mentors
           </Link>
 
-          {/* Candidate can see their bookings */}
+          {/* Show Profile only when the user is logged in */}
+          {user && (
+            <Link to="/profile">
+              Profile
+            </Link>
+          )}
+
+          {/* Candidate-specific page */}
           {user?.role === "candidate" && (
             <Link to="/my-bookings">
               My Bookings
             </Link>
           )}
 
-          {/* Mentor can access mentor dashboard */}
+          {/* Mentor-specific page */}
           {user?.role === "mentor" && (
             <Link to="/mentor-dashboard">
               Mentor Dashboard
             </Link>
           )}
 
-          {/* Show this section when user is logged in */}
+          {/* Logged-in navigation */}
           {user ? (
             <>
-              {/* Display logged-in user's name */}
               <span className="user-name">
                 Hi, {user.name}
               </span>
 
-              {/* Logout button */}
               <button
                 type="button"
                 className="logout-btn"
@@ -82,12 +88,18 @@ function App() {
             </>
           ) : (
             <>
-              {/* Show Login and Register only when nobody is logged in */}
-              <Link to="/login" className="login-btn">
+              {/* Login and Register are only shown when logged out */}
+              <Link
+                to="/login"
+                className="login-btn"
+              >
                 Login
               </Link>
 
-              <Link to="/register" className="register-btn">
+              <Link
+                to="/register"
+                className="register-btn"
+              >
                 Register
               </Link>
             </>
@@ -96,52 +108,50 @@ function App() {
         </div>
       </nav>
 
-      {/* Application pages */}
+
+      {/* Application routes */}
       <Routes>
 
-        {/* Home page */}
         <Route
           path="/"
           element={<Home />}
         />
 
-        {/* Login page */}
         <Route
           path="/login"
           element={<Login />}
         />
 
-        {/* Registration page */}
         <Route
           path="/register"
           element={<Register />}
         />
 
-        {/* Mentor listing page */}
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
         <Route
           path="/mentors"
           element={<Mentors />}
         />
 
-        {/* Individual mentor details page */}
         <Route
           path="/mentors/:id"
           element={<MentorDetails />}
         />
 
-        {/* Dashboard used by mentors */}
         <Route
           path="/mentor-dashboard"
           element={<MentorDashboard />}
         />
 
-        {/* Candidate booking history */}
         <Route
           path="/my-bookings"
           element={<CandidateBookings />}
         />
 
-        {/* Statistics page */}
         <Route
           path="/stats"
           element={<Stats />}
