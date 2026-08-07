@@ -1,0 +1,24 @@
+# Don't upload installed packages
+node_modules/
+
+# Keep environment variables and secrets private
+.env
+.env.*
+!.env.example
+
+# Ignore production build files
+dist/
+build/
+
+# Ignore log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore editor settings
+.vscode/
+.idea/
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db

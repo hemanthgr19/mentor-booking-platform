@@ -1,0 +1,49 @@
+/* Basic global setup for the whole application */
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1e293b;
+  background: #f8fafc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* Remove the browser's default page margin */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+
+/* Make sure the React root can use the full page width */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+/* Use the same font for form controls and buttons */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+
+/* Keep links clean by default */
+a {
+  text-decoration: none;
+}
+
+
+/* Make images responsive if we add any later */
+img {
+  max-width: 100%;
+  display: block;
+}
