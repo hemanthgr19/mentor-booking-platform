@@ -1,7 +1,13 @@
 // React Router is used to move between pages
 import { Routes, Route, Link } from "react-router-dom";
 
-// Import all pages
+// Redux is used to read the logged-in user and handle logout
+import { useDispatch, useSelector } from "react-redux";
+
+// Import the logout action
+import { logout } from "./features/auth/authSlice";
+
+// Import application pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -9,27 +15,26 @@ import Mentors from "./pages/Mentors";
 import MentorDetails from "./pages/MentorDetails";
 import MentorDashboard from "./pages/MentorDashboard";
 import CandidateBookings from "./pages/CandidateBookings";
-import Stats from "./pages/Stats";
 import Profile from "./pages/Profile";
-
-// Redux is used to read the logged-in user and handle logout
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "./features/auth/authSlice";
+import Stats from "./pages/Stats";
 
 // Main application styles
 import "./App.scss";
+
 
 function App() {
   // Redux dispatch function
   const dispatch = useDispatch();
 
-  // Get the logged-in user from Redux
+  // Get the currently logged-in user from Redux
   const { user } = useSelector((state) => state.auth);
 
-  // Logout action
+
+  // Clear login information when the user clicks Logout
   const handleLogout = () => {
     dispatch(logout());
   };
+
 
   return (
     <div className="app">
@@ -42,6 +47,7 @@ function App() {
           MentorConnect
         </Link>
 
+
         {/* Navigation links */}
         <div className="nav-links">
 
@@ -50,28 +56,32 @@ function App() {
             Find Mentors
           </Link>
 
-          {/* Show Profile only when the user is logged in */}
+
+          {/* Show Profile only when a user is logged in */}
           {user && (
             <Link to="/profile">
               Profile
             </Link>
           )}
 
-          {/* Candidate-specific page */}
+
+          {/* Candidate-specific navigation */}
           {user?.role === "candidate" && (
             <Link to="/my-bookings">
               My Bookings
             </Link>
           )}
 
-          {/* Mentor-specific page */}
+
+          {/* Mentor-specific navigation */}
           {user?.role === "mentor" && (
             <Link to="/mentor-dashboard">
               Mentor Dashboard
             </Link>
           )}
 
-          {/* Logged-in navigation */}
+
+          {/* If a user is logged in, show their name and Logout */}
           {user ? (
             <>
               <span className="user-name">
@@ -88,7 +98,7 @@ function App() {
             </>
           ) : (
             <>
-              {/* Login and Register are only shown when logged out */}
+              {/* Show Login and Register when nobody is logged in */}
               <Link
                 to="/login"
                 className="login-btn"
@@ -112,46 +122,55 @@ function App() {
       {/* Application routes */}
       <Routes>
 
+        {/* Home page */}
         <Route
           path="/"
           element={<Home />}
         />
 
+        {/* Login page */}
         <Route
           path="/login"
           element={<Login />}
         />
 
+        {/* Registration page */}
         <Route
           path="/register"
           element={<Register />}
         />
 
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
-
+        {/* Mentor listing page */}
         <Route
           path="/mentors"
           element={<Mentors />}
         />
 
+        {/* Individual mentor profile */}
         <Route
           path="/mentors/:id"
           element={<MentorDetails />}
         />
 
+        {/* Logged-in user profile */}
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
+        {/* Mentor dashboard */}
         <Route
           path="/mentor-dashboard"
           element={<MentorDashboard />}
         />
 
+        {/* Candidate booking history */}
         <Route
           path="/my-bookings"
           element={<CandidateBookings />}
         />
 
+        {/* Optional Chart.js statistics page */}
         <Route
           path="/stats"
           element={<Stats />}
@@ -162,4 +181,6 @@ function App() {
   );
 }
 
+
+// Export the main application component
 export default App;

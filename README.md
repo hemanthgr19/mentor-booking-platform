@@ -122,7 +122,7 @@ mentor-booking-platform/
 │   │   │   └── Stats.jsx
 │   │   │
 │   │   ├── App.jsx
-│   │   ├── App.css
+│   │   ├── App.scss
 │   │   ├── index.css
 │   │   └── main.jsx
 │   │
@@ -997,3 +997,14 @@ The main mentor booking functionality is implemented and working in the developm
 The project currently supports the complete core workflow:
 
 **mentor availability → mentor discovery → booking request → mentor decision → booking confirmation**
+
+
+## AI Assistance Declaration
+
+I developed this project myself and understand the code and functionality I have submitted.
+
+I used ChatGPT (OpenAI) a few times during development to help me work faster, mainly for suggestions, debugging and resolving some issues.
+
+I did not use or copy any other public GitHub repository for this project.
+
+I am able to explain the code, project structure and the implementation during the technical discussion.
